@@ -8,7 +8,6 @@
   flex-direction: column;
   gap: 32px;
   background-color: white;
-  margin: 0 2rem;
 }
 
 .card > img:first-child {
@@ -43,4 +42,10 @@
 .card > div > div > .text {
   font-size: 1rem;
   color: #667085;
+}
+
+@media screen and (max-width: 380px) {
+  .card {
+    margin: 0 2rem;
+  }
 }
