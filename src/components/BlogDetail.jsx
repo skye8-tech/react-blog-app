@@ -11,6 +11,7 @@ function BlogDetail() {
   useEffect(() => {
     axios
       .get("https://api.jsonbin.io/v3/b/664dd5fce41b4d34e4f7ac44")
+      // eslint-disable-next-line
       .then((res) => res.data.record.filter((item) => item.id == postId)[0])
       .then((data) => setPost(data))
       .catch((err) => console.log(err));
