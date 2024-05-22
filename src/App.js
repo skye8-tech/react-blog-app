@@ -1,4 +1,5 @@
 import "./App.css";
+import Footer from "./components/Footer";
 import MainSection from "./components/MainSection";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         </div>
       </header>
       <MainSection />
+      <Footer />
     </div>
   );
 }

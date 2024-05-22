@@ -21,3 +21,9 @@ html {
   max-width: 1280px;
   margin: 0 auto;
 }
+
+.category {
+  font-size: 14px;
+  color: var(--dark-color);
+  font-weight: 600;
+}

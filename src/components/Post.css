@@ -27,12 +27,6 @@
   gap: 12px;
 }
 
-.card > div > div > .category {
-  font-size: 14px;
-  color: var(--dark-color);
-  font-weight: 600;
-}
-
 .card > div > div > .title {
   display: flex;
   justify-content: space-between;
