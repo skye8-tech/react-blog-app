@@ -4,7 +4,7 @@ import "./Post.css";
 import { Link } from "react-router-dom";
 
 const truncateChars = (text) => {
-  return text.length < 100 ? text : text.slice(0, 85) + ". . .";
+  return text.length < 90 ? text : text.slice(0, 85) + ". . .";
 };
 
 function Post(props) {

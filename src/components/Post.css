@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: 32px;
   background-color: white;
+  margin: 0 2rem;
 }
 
 .card > img:first-child {
