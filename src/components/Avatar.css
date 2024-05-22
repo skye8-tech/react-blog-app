@@ -1,0 +1,28 @@
+.avatar {
+  display: flex;
+  flex-direction: row !important;
+  column-gap: 10px;
+  font-size: 14px;
+}
+
+.avatar > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.avatar > div > *:first-child {
+  font-weight: 500;
+}
+
+.avatar > div > *:last-child {
+  font-weight: 400;
+  color: #667085;
+}

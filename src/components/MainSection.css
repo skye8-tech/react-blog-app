@@ -1,0 +1,28 @@
+.main-content {
+  padding: 2rem 0;
+  background-image: url("../../public/images/Background.jpg");
+  background-size: contain;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.main-content .container.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(343px, 384px));
+  justify-content: center;
+  gap: 32px;
+  padding-bottom: 96px;
+}
+
+.load {
+  display: flex;
+  justify-content: center;
+}
+
+.load-more {
+  background-color: var(--secondary-color);
+  width: fit-content;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+}
