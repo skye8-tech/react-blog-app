@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import "./MainSection.css";
 import axios from "axios";
+import Load from "./Load";
 
 function MainSection() {
   const [posts, setPosts] = useState([]);
@@ -26,9 +27,7 @@ function MainSection() {
       <section className="main-content">
         <div className="container grid">
           {loading ? (
-            <div className="loading-container">
-              <div className="dot-pulse"></div>
-            </div>
+            <Load />
           ) : error ? (
             <div style={{ textAlign: "center" }}>
               <h1>There was an error!!!</h1>
