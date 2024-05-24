@@ -1,14 +1,18 @@
 import React from "react";
-import "./Avatar.css";
+import styles from "../assets/styles/Avatar.module.css";
 
 function Avatar(props) {
   const { datePublished, author } = props;
   return (
-    <div className="avatar">
-      <img src={`/images/${author.profilePic}.jpg`} alt="" />
+    <div className={styles.avatar}>
+      <img
+        className={styles.image}
+        src={`/images/${author.profilePic}.jpg`}
+        alt=""
+      />
       <div>
-        <p>{author.name}</p>
-        <p>{datePublished}</p>
+        <p className={styles.name}>{author.name}</p>
+        <p className={styles.datePublished}>{datePublished}</p>
       </div>
     </div>
   );

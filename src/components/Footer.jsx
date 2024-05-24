@@ -1,9 +1,9 @@
 import React from "react";
-import "./Footer.css";
+import styles from "../assets/styles/Footer.module.css";
 
 function Footer() {
   return (
-    <div className="footer">
+    <div className={styles.footer}>
       copyright &#169; {new Date().getFullYear()} @Skye8
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
-import "./MainSection.css";
+import styles from "../assets/styles/MainSection.module.css";
 import axios from "axios";
 import Load from "./Load";
 
@@ -24,8 +24,8 @@ function MainSection() {
   }, []);
   return (
     <>
-      <section className="main-content">
-        <div className="container grid">
+      <section className={styles["main-content"]}>
+        <div className={`container ${styles["grid"]}`}>
           {loading ? (
             <Load />
           ) : error ? (
@@ -41,8 +41,8 @@ function MainSection() {
           )}
         </div>
       </section>
-      <div className="container load">
-        <p className="load-more">
+      <div className={`container ${styles.load}`}>
+        <p className={styles["load-more"]}>
           <i className="fas fa-arrow-down"></i> Load more
         </p>
       </div>
