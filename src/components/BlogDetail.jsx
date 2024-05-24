@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Avatar from "./Avatar";
-import styles from "./BlogDetail.module.css";
+import styles from "../assets/styles/BlogDetail.module.css";
 import Footer from "./Footer";
 import Load from "./Load";
 
