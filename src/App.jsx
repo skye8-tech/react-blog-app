@@ -1,28 +1,15 @@
-import "./App.css";
-import Footer from "./components/Footer";
-import MainSection from "./components/MainSection";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import BlogDetail from "./pages/BlogDetail";
 
 function App() {
   return (
-    <div className="App">
-      <header className="header">
-        <div className="container">
-          <div className="content">
-            <div>
-              <p className="badge">Our blog</p>
-              <h1>Resources and insights</h1>
-              <p>
-                The latest industry news, interviews, technologies, and
-                resources.
-              </p>
-            </div>
-            <input className="search-bar" type="search" placeholder="Search" />
-          </div>
-        </div>
-      </header>
-      <MainSection />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/posts/:postId" element={<BlogDetail />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
