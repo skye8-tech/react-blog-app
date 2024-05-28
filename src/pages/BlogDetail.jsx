@@ -22,6 +22,7 @@ function BlogDetail() {
 
   useEffect(() => {
     setPost(fetchPostById(postId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   return (
