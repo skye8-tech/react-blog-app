@@ -1,32 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Post from "./Post";
 import styles from "../assets/styles/MainSection.module.css";
-import axios from "axios";
 import Load from "./Load";
+import { useBlogProvider } from "./BlogContext";
 
 function MainSection() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  const fetchPosts = () => {
-    axios
-      .get("https://api.jsonbin.io/v3/b/664dd5fce41b4d34e4f7ac44")
-      .then((res) => {
-        setPosts(res.data.record);
-        setLoading(false);
-        setError(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setError(true);
-      });
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const { posts, loading, error } = useBlogProvider();
   return (
     <>
       <section className={styles["main-content"]}>

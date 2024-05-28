@@ -1,35 +1,15 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Avatar from "../components/Avatar";
 import styles from "../assets/styles/BlogDetail.module.css";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
+import { useBlogProvider } from "../components/BlogContext";
 
 function BlogDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  const fetchPost = (postId) => {
-    axios
-      .get("https://api.jsonbin.io/v3/b/664dd5fce41b4d34e4f7ac44")
-      .then((res) => {
-        setLoading(false);
-        setError(false);
-        // eslint-disable-next-line
-        return res.data.record.filter((item) => item.id == postId);
-      })
-      .then((data) => {
-        setPost(data[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setError(true);
-      });
-  };
+  const { loading, error, fetchPost } = useBlogProvider();
 
   const isEmpty = (obj) => {
     for (const prop in obj) {
@@ -41,8 +21,8 @@ function BlogDetail() {
   };
 
   useEffect(() => {
-    fetchPost(postId);
-  }, [postId]);
+    setPost(fetchPost(postId));
+  }, [fetchPost, postId]);
 
   return (
     <div>
