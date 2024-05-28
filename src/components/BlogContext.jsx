@@ -23,7 +23,7 @@ export const BlogProvider = ({ children }) => {
       });
   };
 
-  const fetchPost = (postId) => {
+  const fetchPostById = (postId) => {
     // eslint-disable-next-line
     const post = posts.find((item) => item.id == postId);
     return post;
@@ -31,11 +31,10 @@ export const BlogProvider = ({ children }) => {
 
   useEffect(() => {
     fetchPosts();
-    console.log(">>>>>>>>>>>>>>>>>>Blog context");
   }, []);
 
   return (
-    <BlogContext.Provider value={{ posts, loading, error, fetchPost }}>
+    <BlogContext.Provider value={{ posts, loading, error, fetchPostById }}>
       {children}
     </BlogContext.Provider>
   );

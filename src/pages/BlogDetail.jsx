@@ -9,7 +9,7 @@ import { useBlogProvider } from "../components/BlogContext";
 function BlogDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState({});
-  const { loading, error, fetchPost } = useBlogProvider();
+  const { loading, error, fetchPostById } = useBlogProvider();
 
   const isEmpty = (obj) => {
     for (const prop in obj) {
@@ -21,8 +21,8 @@ function BlogDetail() {
   };
 
   useEffect(() => {
-    setPost(fetchPost(postId));
-  }, [fetchPost, postId]);
+    setPost(fetchPostById(postId));
+  }, [postId]);
 
   return (
     <div>
