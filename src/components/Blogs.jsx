@@ -8,7 +8,8 @@ function MainSection() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  useEffect(() => {
+
+  const fetchPosts = () => {
     axios
       .get("https://api.jsonbin.io/v3/b/664dd5fce41b4d34e4f7ac44")
       .then((res) => {
@@ -21,6 +22,10 @@ function MainSection() {
         setLoading(false);
         setError(true);
       });
+  };
+
+  useEffect(() => {
+    fetchPosts();
   }, []);
   return (
     <>

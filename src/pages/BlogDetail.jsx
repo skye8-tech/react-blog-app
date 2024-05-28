@@ -12,19 +12,9 @@ function BlogDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const isEmpty = (obj) => {
-    for (const prop in obj) {
-      if (Object.hasOwn(obj, prop)) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  useEffect(() => {
+  const fetchPost = (postId) => {
     axios
       .get("https://api.jsonbin.io/v3/b/664dd5fce41b4d34e4f7ac44")
-
       .then((res) => {
         setLoading(false);
         setError(false);
@@ -39,6 +29,19 @@ function BlogDetail() {
         setLoading(false);
         setError(true);
       });
+  };
+
+  const isEmpty = (obj) => {
+    for (const prop in obj) {
+      if (Object.hasOwn(obj, prop)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    fetchPost(postId);
   }, [postId]);
 
   return (
