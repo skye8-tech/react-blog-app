@@ -1,9 +1,4 @@
 /* Loading Animation */
-.loading-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
 .dot-pulse {
   position: relative;
   left: -9999px;
