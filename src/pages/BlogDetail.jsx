@@ -34,7 +34,7 @@ function BlogDetail() {
         {loading ? (
           <Load />
         ) : error ? (
-          <div className="text-center">
+          <div className="text-center text-2xl font-semibold">
             <h1>There was an error!!!</h1>
           </div>
         ) : !isEmpty(post) ? (
@@ -56,7 +56,7 @@ function BlogDetail() {
             </p>
           </>
         ) : (
-          <div className="text-center">
+          <div className="text-center text-2xl font-semibold">
             <h1>Post not found!!!</h1>
           </div>
         )}
