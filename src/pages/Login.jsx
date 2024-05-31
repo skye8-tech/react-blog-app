@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -19,6 +20,10 @@ const Login = () => {
               type="password"
               placeholder="Password"
             />
+          </div>
+          <div className="w-[80%] mx-auto flex justify-between px-4 text-[var(--dark-color)]">
+            <p className=" text-black">Haven't created account yet?</p>
+            <Link to="/create-account">Create Account</Link>
           </div>
           <button
             className="block bg-[var(--secondary-color)] py-2 px-3 w-[75%] rounded-full mx-auto mt-8 text-center"
