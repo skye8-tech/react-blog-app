@@ -24,7 +24,7 @@ function MainSection() {
           )}
         </div>
       </section>
-      <div className="flex justify-center">
+      <div className="flex justify-center cursor-pointer">
         <p className="bg-[var(--secondary-color)] w-fit py-2.5 px-4 text-sm rounded-md mb-8">
           <i className="fas fa-arrow-down"></i> Load more
         </p>
