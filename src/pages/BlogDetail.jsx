@@ -4,11 +4,19 @@ import Avatar from "../components/Avatar";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
 import { useBlogProvider } from "../components/BlogContext";
+import useInput from "../hooks/useInput";
 
 function BlogDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState({});
+  const [comment, bindComment, resetComment] = useInput("");
   const { loading, error, fetchPostById } = useBlogProvider();
+
+  const handleSubmitComment = (event) => {
+    event.preventDefault();
+    alert(comment);
+    resetComment();
+  };
 
   const isEmpty = (obj) => {
     for (const prop in obj) {
@@ -85,8 +93,13 @@ function BlogDetail() {
                 name=""
                 className=" flex-grow border-2 border-[var(--primary-color)] outline-none rounded-l-lg p-1"
                 placeholder="Write a comment..."
+                {...bindComment}
               ></textarea>
-              <button className="bg-[var(--primary-color)] py-2 px-4 rounded-r-lg text-center">
+              <button
+                type="submit"
+                className="bg-[var(--primary-color)] py-2 px-4 rounded-r-lg text-center"
+                onClick={handleSubmitComment}
+              >
                 <i className="fa-solid fa-paper-plane"></i>
               </button>
             </form>

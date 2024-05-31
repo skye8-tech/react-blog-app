@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useInput from "../hooks/useInput";
 
 const Login = () => {
+  const [email, bindEmail, resetEmail] = useInput("");
+  const [password, bindPassword, resetPassword] = useInput("");
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    alert(email + password);
+    resetEmail();
+    resetPassword();
+  };
+
   return (
     <div className="w-screen h-screen grid grid-cols-2 max-[640px]:grid-cols-1">
       <div className="bg-white flex flex-col justify-center gap-y-8 px-4">
@@ -12,6 +23,7 @@ const Login = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="email"
               placeholder="Email"
+              {...bindEmail}
             />
           </div>
           <div className="w-[75%] mb-4 mx-auto">
@@ -19,6 +31,7 @@ const Login = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="password"
               placeholder="Password"
+              {...bindPassword}
             />
           </div>
           <div className="w-[80%] mx-auto flex justify-between px-4 text-[var(--dark-color)]">
@@ -28,6 +41,7 @@ const Login = () => {
           <button
             className="block bg-[var(--secondary-color)] py-2 px-3 w-[75%] rounded-full mx-auto mt-8 text-center"
             type="submit"
+            onClick={handleLogin}
           >
             Log In
           </button>

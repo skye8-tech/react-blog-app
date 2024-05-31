@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 const useInput = (initialValue) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(initialValue);
   const reset = () => {
     setValue(initialValue);
   };
   const bind = {
     value,
-    onchange: (event) => {
+    onChange: (event) => {
       setValue(event.target.value);
     },
   };

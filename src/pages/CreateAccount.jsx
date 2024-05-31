@@ -1,17 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useInput from "../hooks/useInput";
 
 const CreateAccount = () => {
+  const [firstname, bindFirstName, resetFirstName] = useInput("");
+  const [lastname, bindLastname, resetLastname] = useInput("");
+  const [email, bindEmail, resetEmail] = useInput("");
+  const [password, bindPassword, resetPassword] = useInput("");
+
+  const handleCreateAccount = (event) => {
+    event.preventDefault();
+    alert(firstname + lastname + email + password);
+    resetEmail();
+    resetFirstName();
+    resetLastname();
+    resetPassword();
+  };
+
   return (
     <div className="w-screen h-screen grid grid-cols-2 max-[640px]:grid-cols-1">
       <div className="bg-white flex flex-col justify-center gap-y-8 px-4">
         <h1 className="text-5xl font-bold self-center">Sign Up</h1>
-        <form>
+        <form action="post">
           <div className="w-[75%] mb-4 mx-auto">
             <input
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="text"
               placeholder="First name"
+              {...bindFirstName}
             />
           </div>
           <div className="w-[75%] mb-4 mx-auto">
@@ -19,6 +35,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="text"
               placeholder="Last name"
+              {...bindLastname}
             />
           </div>
           <div className="w-[75%] mb-4 mx-auto">
@@ -26,6 +43,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="email"
               placeholder="Email"
+              {...bindEmail}
             />
           </div>
           <div className="w-[75%] mb-4 mx-auto">
@@ -33,6 +51,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="password"
               placeholder="Password"
+              {...bindPassword}
             />
           </div>
           <div className="w-[80%] mx-auto flex justify-between px-4 text-[var(--dark-color)]">
@@ -42,6 +61,7 @@ const CreateAccount = () => {
           <button
             className="block bg-[var(--secondary-color)] py-2 px-3 w-[75%] rounded-full mx-auto mt-8 text-center"
             type="submit"
+            onClick={handleCreateAccount}
           >
             Sign Up
           </button>
