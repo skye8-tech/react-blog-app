@@ -51,9 +51,45 @@ function BlogDetail() {
               src={`/images/${post.image}.jpg`}
               alt=""
             />
-            <p className="leading-6 mb-8 first-letter:text-2xl first-letter:pl-12">
+            <p className="leading-6 mb-4 first-letter:text-2xl first-letter:pl-12">
               {post.content}
             </p>
+            <div className="flex justify-around border-t-2 border-b-2 mb-2 py-4 text-lg">
+              <p>
+                <i className="fa-regular fa-thumbs-up mr-2"></i>Like
+              </p>
+              <p>
+                <i className="fa-regular fa-comment mr-2"></i>Comment
+              </p>
+              <p>
+                <i className="fa-solid fa-share mr-2"></i>Share
+              </p>
+            </div>
+            <p className="text-center my-2 font-bold">Comments</p>
+            <div className="flex flex-col gap-y-2 mb-2">
+              <div className=" border-l-2 p-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
+                consectetur, asperiores cumque expedita distinctio,
+                exercitationem reiciendis quae ipsam alias vero quidem est,
+                aperiam harum repellat in recusandae animi enim neque.
+              </div>
+              <div className=" border-l-2 p-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
+                consectetur, asperiores cumque expedita distinctio,
+                exercitationem reiciendis quae ipsam alias vero quidem est,
+                aperiam harum repellat in recusandae animi enim neque.
+              </div>
+            </div>
+            <form action="#" className="flex mb-4">
+              <textarea
+                name=""
+                className=" flex-grow border-2 border-[var(--primary-color)] outline-none rounded-l-lg p-1"
+                placeholder="Write a comment..."
+              ></textarea>
+              <button className="bg-[var(--primary-color)] py-2 px-4 rounded-r-lg text-center">
+                <i className="fa-solid fa-paper-plane"></i>
+              </button>
+            </form>
           </>
         ) : (
           <div className="text-center text-2xl font-semibold">

@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateAccount = () => {
   return (
-    <div className="w-screen h-screen grid grid-cols-2">
+    <div className="w-screen h-screen grid grid-cols-2 max-[640px]:grid-cols-1">
       <div className="bg-white flex flex-col justify-center gap-y-8 px-4">
         <h1 className="text-5xl font-bold self-center">Sign Up</h1>
         <form>
@@ -42,7 +42,7 @@ const CreateAccount = () => {
           </button>
         </form>
       </div>
-      <div className=" bg-[var(--light-color)] flex items-center justify-center">
+      <div className=" bg-[var(--light-color)] flex items-center justify-center max-[640px]:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="550.59998"
