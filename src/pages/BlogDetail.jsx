@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Avatar from "../components/Avatar";
-import styles from "../assets/styles/BlogDetail.module.css";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
 import { useBlogProvider } from "../components/BlogContext";
@@ -27,39 +26,37 @@ function BlogDetail() {
 
   return (
     <div>
-      <div className={styles.postDetail}>Post Detail</div>
+      <div className="h-12 shadow-md font-bold flex items-center pl-8 mb-8">
+        Post Detail
+      </div>
 
-      <div className={styles.container}>
+      <div className="max-w-5xl min-h-[50vh] mx-auto flex flex-col gap-y-4 px-4">
         {loading ? (
           <Load />
         ) : error ? (
-          <div
-            style={{
-              textAlign: "center",
-            }}
-          >
+          <div className="text-center text-2xl font-semibold">
             <h1>There was an error!!!</h1>
           </div>
         ) : !isEmpty(post) ? (
           <>
-            <p className="category">{post.category}</p>
-            <div className={styles.title}>{post.title}</div>
+            <p className="text-base text-[var(--dark-color)] font-semibold">
+              {post.category}
+            </p>
+            <div className="text-4xl font-semibold">{post.title}</div>
             {post.author && (
               <Avatar datePublished={post.datePublished} author={post.author} />
             )}
             <img
-              className={styles.blogImage}
+              className="w-[105%] mx-4 self-center rounded-2xl mb-4"
               src={`/images/${post.image}.jpg`}
               alt=""
             />
-            <p className={styles.textContent}>{post.content}</p>
+            <p className="leading-6 mb-8 first-letter:text-2xl first-letter:pl-12">
+              {post.content}
+            </p>
           </>
         ) : (
-          <div
-            style={{
-              textAlign: "center",
-            }}
-          >
+          <div className="text-center text-2xl font-semibold">
             <h1>Post not found!!!</h1>
           </div>
         )}

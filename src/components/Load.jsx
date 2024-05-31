@@ -3,7 +3,7 @@ import React from "react";
 
 function Load() {
   return (
-    <div className={styles["loading-container"]}>
+    <div className="flex justify-center mt-8">
       <div className={styles["dot-pulse"]}></div>
     </div>
   );

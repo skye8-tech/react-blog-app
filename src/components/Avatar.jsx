@@ -1,18 +1,17 @@
 import React from "react";
-import styles from "../assets/styles/Avatar.module.css";
 
 function Avatar(props) {
   const { datePublished, author } = props;
   return (
-    <div className={styles.avatar}>
+    <div className="flex flex-row gap-x-2.5 text-sm">
       <img
-        className={styles.image}
+        className="w-10 h-10 rounded-full object-cover"
         src={`/images/${author.profilePic}.jpg`}
         alt=""
       />
-      <div>
-        <p className={styles.name}>{author.name}</p>
-        <p className={styles.datePublished}>{datePublished}</p>
+      <div className="flex flex-col justify-between">
+        <p className="font-medium">{author.name}</p>
+        <p className="font-normal">{datePublished}</p>
       </div>
     </div>
   );

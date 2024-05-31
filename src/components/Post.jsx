@@ -1,6 +1,5 @@
 import React from "react";
 import Avatar from "./Avatar";
-import styles from "../assets/styles/Post.module.css";
 import { Link } from "react-router-dom";
 
 const truncateChars = (text) => {
@@ -11,16 +10,18 @@ function Post(props) {
   const { id, image, category, title, content, datePublished, author } = props;
   return (
     <Link to={`/posts/${id}`}>
-      <div className={styles.card}>
-        <img src={`/images/${image}.jpg`} alt="" />
-        <div>
-          <div>
-            <p className="category">{category}</p>
-            <div className={styles.title}>
+      <div className="max-w-[384px] min-h-[530px] pt-6 px-6 pb-8 shadow-md flex flex-col gap-8 bg-white max-[380px]:mx-8">
+        <img src={`/images/${image}.jpg`} alt="" className="w-full" />
+        <div className="flex flex-col justify-between flex-grow">
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-[var(--dark-color)] font-semibold">
+              {category}
+            </p>
+            <div className="flex justify-between text-2xl font-semibold items-start">
               <p>{title}</p>
-              <img src="/images/Icon wrap.jpg" alt="" />
+              <img src="/images/Icon wrap.jpg" alt="" className="w-6" />
             </div>
-            <p className={styles.text}>{truncateChars(content)}</p>
+            <p className="text-base text-[#667085]">{truncateChars(content)}</p>
           </div>
 
           <Avatar datePublished={datePublished} author={author} />
