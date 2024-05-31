@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Avatar from "../components/Avatar";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
 import { useBlogProvider } from "../components/BlogContext";
 import useInput from "../hooks/useInput";
+import Comment from "../components/Comment";
 
 function BlogDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState({});
   const [comment, bindComment, resetComment] = useInput("");
+  const commentRef = useRef(null);
   const { loading, error, fetchPostById } = useBlogProvider();
 
   const handleSubmitComment = (event) => {
@@ -66,34 +68,28 @@ function BlogDetail() {
               <p>
                 <i className="fa-regular fa-thumbs-up mr-2"></i>Like
               </p>
-              <p>
+              <p
+                onClick={(e) => {
+                  commentRef.current.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                  commentRef.current.focus();
+                }}
+              >
                 <i className="fa-regular fa-comment mr-2"></i>Comment
               </p>
               <p>
                 <i className="fa-solid fa-share mr-2"></i>Share
               </p>
             </div>
-            <p className="text-center my-2 font-bold">Comments</p>
-            <div className="flex flex-col gap-y-2 mb-2">
-              <div className=" border-l-2 p-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                consectetur, asperiores cumque expedita distinctio,
-                exercitationem reiciendis quae ipsam alias vero quidem est,
-                aperiam harum repellat in recusandae animi enim neque.
-              </div>
-              <div className=" border-l-2 p-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                consectetur, asperiores cumque expedita distinctio,
-                exercitationem reiciendis quae ipsam alias vero quidem est,
-                aperiam harum repellat in recusandae animi enim neque.
-              </div>
-            </div>
-            <form action="#" className="flex mb-4">
+            <Comment />
+            <form action="post" className="flex mb-4">
               <textarea
                 name=""
                 className=" flex-grow border-2 border-[var(--primary-color)] outline-none rounded-l-lg p-1"
                 placeholder="Write a comment..."
                 {...bindComment}
+                ref={commentRef}
               ></textarea>
               <button
                 type="submit"
