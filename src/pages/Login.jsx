@@ -1,23 +1,40 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
+import axios from "axios";
+import { useAuth } from "../Authentication/auth";
 
 const Login = () => {
   const [email, bindEmail, resetEmail] = useInput("");
   const [password, bindPassword, resetPassword] = useInput("");
+  const navigate = useNavigate();
+  const auth = useAuth();
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    alert(email + password);
-    resetEmail();
-    resetPassword();
+    const loginInfo = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const result = await axios.post(
+        "https://blog-api-zk5m.onrender.com/v1/users/auth/login",
+        loginInfo
+      );
+      console.log(result.data);
+      auth.setToken(result.data.token);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="w-screen h-screen grid grid-cols-2 max-[640px]:grid-cols-1">
       <div className="bg-white flex flex-col justify-center gap-y-8 px-4">
         <h1 className="text-5xl font-bold self-center">Log In</h1>
-        <form>
+        <form method="post">
           <div className="w-[75%] mb-4 mx-auto">
             <input
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
