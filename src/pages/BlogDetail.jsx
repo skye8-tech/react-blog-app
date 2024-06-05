@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Avatar from "../components/Avatar";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
@@ -71,6 +66,41 @@ function BlogDetail() {
       .catch((error) => console.log(error));
   };
 
+  const handleLikePost = async () => {
+    if (auth.token) {
+      try {
+        if (post.likes.filter((like) => like._id === auth.userId).length) {
+          await axios.delete(
+            `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${auth.token}`,
+              },
+            }
+          );
+          console.log("Unliked post " + postId);
+          setPost();
+        } else {
+          await axios.put(
+            `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${auth.token}`,
+              },
+            }
+          );
+          console.log("Liked post " + postId);
+          setPost();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      navigate("/login", { state: { path: location.pathname } });
+    }
+  };
+
   useEffect(() => {
     fetchComments(postId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,10 +143,13 @@ function BlogDetail() {
               {post.body}
             </p>
             <div className="flex justify-around border-t-2 border-b-2 mb-2 py-4 text-lg">
-              <p>
-                <i className="fa-regular fa-thumbs-up mr-2"></i>Like
-              </p>
-              <p
+              <button onClick={handleLikePost}>
+                <i className="fa-regular fa-thumbs-up mr-2"></i>
+                {post.likes.filter((like) => like._id === auth.userId).length
+                  ? "Unlike"
+                  : "Like"}
+              </button>
+              <button
                 onClick={(e) => {
                   commentRef.current.scrollIntoView({
                     behavior: "smooth",
@@ -125,10 +158,10 @@ function BlogDetail() {
                 }}
               >
                 <i className="fa-regular fa-comment mr-2"></i>Comment
-              </p>
-              <p>
+              </button>
+              <button>
                 <i className="fa-solid fa-share mr-2"></i>Share
-              </p>
+              </button>
             </div>
             <p className="text-center my-2 font-bold">Comments</p>
             {PostComments.length !== 0 &&

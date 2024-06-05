@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 
 const BlogContext = React.createContext(null);
@@ -42,11 +42,6 @@ export const BlogProvider = ({ children }) => {
       return {};
     }
   };
-
-  // const fetchPostById = (postId) => {
-  //   const post = posts.find((item) => item._id == postId);
-  //   return post;
-  // };
 
   return (
     <BlogContext.Provider value={{ loading, error, fetchPostById, fetchPosts }}>

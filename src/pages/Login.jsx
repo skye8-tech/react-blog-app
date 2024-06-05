@@ -25,6 +25,7 @@ const Login = () => {
       );
       console.log(result.data);
       auth.setToken(result.data.token);
+      auth.setUserId(result.data._id);
       const redirectpath = location.state?.path || "/";
       navigate(redirectpath, { replace: true });
     } catch (error) {
