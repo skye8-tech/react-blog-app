@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Avatar from "../components/Avatar";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
@@ -17,10 +22,29 @@ function BlogDetail() {
   const commentRef = useRef(null);
   const { loading, error, fetchPostById } = useBlogProvider();
   const auth = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmitComment = (event) => {
     event.preventDefault();
-    alert(comment);
+    const data = {
+      postId: postId,
+      body: comment,
+    };
+    if (auth.token) {
+      axios
+        .post("https://blog-api-zk5m.onrender.com/v1/comments/create", data, {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        })
+        .then((result) => {
+          setPostComments((prevState) => prevState);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      navigate("/login", { state: { path: location.pathname } });
+    }
     resetComment();
   };
 
@@ -39,8 +63,6 @@ function BlogDetail() {
         headers: { Authorization: `Bearer ${auth.token}` },
       })
       .then((response) => {
-        console.log(response);
-
         setPostComments(
           // eslint-disable-next-line
           response.data.filter((item) => item.postId == postId)
@@ -50,7 +72,11 @@ function BlogDetail() {
   };
 
   useEffect(() => {
-    // setPost(fetchPostById(postId));
+    fetchComments(postId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postId, PostComments]);
+
+  useEffect(() => {
     fetchPostById(postId).then((result) => setPost(result));
     fetchComments(postId);
     // eslint-disable-next-line react-hooks/exhaustive-deps

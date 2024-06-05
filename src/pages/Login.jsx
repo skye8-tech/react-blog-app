@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import axios from "axios";
 import { useAuth } from "../Authentication/auth";
@@ -9,6 +9,7 @@ const Login = () => {
   const [password, bindPassword] = useInput("");
   const navigate = useNavigate();
   const auth = useAuth();
+  const location = useLocation();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -24,7 +25,8 @@ const Login = () => {
       );
       console.log(result.data);
       auth.setToken(result.data.token);
-      navigate("/");
+      const redirectpath = location.state?.path || "/";
+      navigate(redirectpath, { replace: true });
     } catch (error) {
       console.log(error);
     }
