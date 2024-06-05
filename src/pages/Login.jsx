@@ -5,8 +5,8 @@ import axios from "axios";
 import { useAuth } from "../Authentication/auth";
 
 const Login = () => {
-  const [email, bindEmail, resetEmail] = useInput("");
-  const [password, bindPassword, resetPassword] = useInput("");
+  const [email, bindEmail] = useInput("");
+  const [password, bindPassword] = useInput("");
   const navigate = useNavigate();
   const auth = useAuth();
 

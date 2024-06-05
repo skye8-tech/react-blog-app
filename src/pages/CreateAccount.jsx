@@ -4,10 +4,10 @@ import useInput from "../hooks/useInput";
 import axios from "axios";
 
 const CreateAccount = () => {
-  const [firstName, bindFirstName, resetFirstName] = useInput("");
-  const [lastName, bindLastName, resetLastName] = useInput("");
-  const [email, bindEmail, resetEmail] = useInput("");
-  const [password, bindPassword, resetPassword] = useInput("");
+  const [firstName, bindFirstName] = useInput("");
+  const [lastName, bindLastName] = useInput("");
+  const [email, bindEmail] = useInput("");
+  const [password, bindPassword] = useInput("");
   const navigate = useNavigate();
 
   const handleCreateAccount = async (event) => {
@@ -28,11 +28,6 @@ const CreateAccount = () => {
     } catch (error) {
       console.log(error.response.data);
     }
-
-    // resetEmail();
-    // resetFirstName();
-    // resetLastname();
-    // resetPassword();
   };
 
   return (

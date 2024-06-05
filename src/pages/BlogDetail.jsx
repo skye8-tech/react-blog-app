@@ -6,13 +6,17 @@ import Load from "../components/Load";
 import { useBlogProvider } from "../components/BlogContext";
 import useInput from "../hooks/useInput";
 import Comment from "../components/Comment";
+import axios from "axios";
+import { useAuth } from "../Authentication/auth";
 
 function BlogDetail() {
   const { postId } = useParams();
   const [post, setPost] = useState({});
   const [comment, bindComment, resetComment] = useInput("");
+  const [PostComments, setPostComments] = useState([]);
   const commentRef = useRef(null);
   const { loading, error, fetchPostById } = useBlogProvider();
+  const auth = useAuth();
 
   const handleSubmitComment = (event) => {
     event.preventDefault();
@@ -29,8 +33,26 @@ function BlogDetail() {
     return true;
   };
 
+  const fetchComments = (postId) => {
+    axios
+      .get(`https://blog-api-zk5m.onrender.com/v1/comments`, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      })
+      .then((response) => {
+        console.log(response);
+
+        setPostComments(
+          // eslint-disable-next-line
+          response.data.filter((item) => item.postId == postId)
+        );
+      })
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
-    setPost(fetchPostById(postId));
+    // setPost(fetchPostById(postId));
+    fetchPostById(postId).then((result) => setPost(result));
+    fetchComments(postId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
@@ -50,19 +72,19 @@ function BlogDetail() {
         ) : !isEmpty(post) ? (
           <>
             <p className="text-base text-[var(--dark-color)] font-semibold">
-              {post.category}
+              Category
             </p>
             <div className="text-4xl font-semibold">{post.title}</div>
-            {post.author && (
-              <Avatar datePublished={post.datePublished} author={post.author} />
+            {post.authorId && (
+              <Avatar createdAt={post.createdAt} authorId={post.authorId._id} />
             )}
             <img
               className="w-[105%] mx-4 self-center rounded-2xl mb-4"
-              src={`/images/${post.image}.jpg`}
+              src={post.attachment}
               alt=""
             />
             <p className="leading-6 mb-4 first-letter:text-2xl first-letter:pl-12">
-              {post.content}
+              {post.body}
             </p>
             <div className="flex justify-around border-t-2 border-b-2 mb-2 py-4 text-lg">
               <p>
@@ -82,7 +104,11 @@ function BlogDetail() {
                 <i className="fa-solid fa-share mr-2"></i>Share
               </p>
             </div>
-            <Comment />
+            <p className="text-center my-2 font-bold">Comments</p>
+            {PostComments.length !== 0 &&
+              PostComments.map((comment) => (
+                <Comment key={comment._id} comment={comment} />
+              ))}
             <form action="post" className="flex mb-4">
               <textarea
                 name=""
