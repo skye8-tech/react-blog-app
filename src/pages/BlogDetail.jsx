@@ -34,7 +34,7 @@ function BlogDetail() {
           },
         })
         .then((result) => {
-          setPostComments((prevState) => prevState);
+          fetchComments(postId);
         })
         .catch((error) => console.log(error));
     } else {
@@ -69,18 +69,9 @@ function BlogDetail() {
   const handleLikePost = async () => {
     if (auth.token) {
       try {
-        if (post.likes.filter((like) => like._id === auth.userId).length) {
-          await axios.delete(
-            `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${auth.token}`,
-              },
-            }
-          );
-          console.log("Unliked post " + postId);
-          setPost();
-        } else {
+        if (
+          post.likes.filter((like) => like._id === auth.userId).length === 0
+        ) {
           await axios.put(
             `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
             {},
@@ -91,7 +82,18 @@ function BlogDetail() {
             }
           );
           console.log("Liked post " + postId);
-          setPost();
+          fetchPostById(postId).then((result) => setPost(result));
+        } else {
+          await axios.delete(
+            `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${auth.token}`,
+              },
+            }
+          );
+          console.log("Unliked post " + postId);
+          fetchPostById(postId).then((result) => setPost(result));
         }
       } catch (error) {
         console.log(error);
@@ -104,7 +106,7 @@ function BlogDetail() {
   useEffect(() => {
     fetchComments(postId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postId, PostComments]);
+  }, [postId]);
 
   useEffect(() => {
     fetchPostById(postId).then((result) => setPost(result));
@@ -145,9 +147,10 @@ function BlogDetail() {
             <div className="flex justify-around border-t-2 border-b-2 mb-2 py-4 text-lg">
               <button onClick={handleLikePost}>
                 <i className="fa-regular fa-thumbs-up mr-2"></i>
-                {post.likes.filter((like) => like._id === auth.userId).length
-                  ? "Unlike"
-                  : "Like"}
+                {post.likes.filter((like) => like._id === auth.userId)
+                  .length === 0
+                  ? "Like"
+                  : "Unlike"}
               </button>
               <button
                 onClick={(e) => {
