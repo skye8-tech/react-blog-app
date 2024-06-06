@@ -26,11 +26,11 @@ function BlogDetail() {
       postId: postId,
       body: comment,
     };
-    if (auth.token) {
+    if (auth.getUser()?.token) {
       axios
         .post("https://blog-api-zk5m.onrender.com/v1/comments/create", data, {
           headers: {
-            Authorization: `Bearer ${auth.token}`,
+            Authorization: `Bearer ${auth.getUser()?.token}`,
           },
         })
         .then((result) => {
@@ -55,7 +55,7 @@ function BlogDetail() {
   const fetchComments = (postId) => {
     axios
       .get(`https://blog-api-zk5m.onrender.com/v1/comments`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
+        headers: { Authorization: `Bearer ${auth.getUser()?.token}` },
       })
       .then((response) => {
         setPostComments(
@@ -67,17 +67,18 @@ function BlogDetail() {
   };
 
   const handleLikePost = async () => {
-    if (auth.token) {
+    if (auth.getUser()?.token) {
       try {
         if (
-          post.likes.filter((like) => like._id === auth.userId).length === 0
+          post.likes.filter((like) => like._id === auth.getUser()?._id)
+            .length === 0
         ) {
           await axios.put(
             `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
             {},
             {
               headers: {
-                Authorization: `Bearer ${auth.token}`,
+                Authorization: `Bearer ${auth.getUser()?.token}`,
               },
             }
           );
@@ -88,7 +89,7 @@ function BlogDetail() {
             `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
             {
               headers: {
-                Authorization: `Bearer ${auth.token}`,
+                Authorization: `Bearer ${auth.getUser()?.token}`,
               },
             }
           );
@@ -152,7 +153,7 @@ function BlogDetail() {
             <div className="flex justify-around border-t-2 border-b-2 mb-2 py-4 text-lg">
               <button onClick={handleLikePost}>
                 <i className="fa-regular fa-thumbs-up mr-2"></i>
-                {post.likes.filter((like) => like._id === auth.userId)
+                {post.likes.filter((like) => like._id === auth.getUser()?._id)
                   .length === 0
                   ? "Like"
                   : "Unlike"}

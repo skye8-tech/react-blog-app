@@ -40,6 +40,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="text"
               placeholder="First name"
+              required
               {...bindFirstName}
             />
           </div>
@@ -48,6 +49,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="text"
               placeholder="Last name"
+              required
               {...bindLastName}
             />
           </div>
@@ -56,6 +58,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="email"
               placeholder="Email"
+              required
               {...bindEmail}
             />
           </div>
@@ -64,6 +67,7 @@ const CreateAccount = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="password"
               placeholder="Password"
+              required
               {...bindPassword}
             />
           </div>

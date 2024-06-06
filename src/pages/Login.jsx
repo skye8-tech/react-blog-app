@@ -23,9 +23,7 @@ const Login = () => {
         "https://blog-api-zk5m.onrender.com/v1/users/auth/login",
         loginInfo
       );
-      console.log(result.data);
-      auth.setToken(result.data.token);
-      auth.setUserId(result.data._id);
+      auth.setUser(result.data);
       const redirectpath = location.state?.path || "/";
       navigate(redirectpath, { replace: true });
     } catch (error) {
@@ -43,6 +41,7 @@ const Login = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="email"
               placeholder="Email"
+              required
               {...bindEmail}
             />
           </div>
@@ -51,6 +50,7 @@ const Login = () => {
               className="py-2 w-full focus:outline-none border-[#f4ebff] border-2 rounded-lg pl-3"
               type="password"
               placeholder="Password"
+              required
               {...bindPassword}
             />
           </div>

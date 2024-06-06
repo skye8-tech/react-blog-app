@@ -5,11 +5,20 @@ import { useState } from "react";
 const AuthContext = React.createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState("");
-  const [userId, setUserId] = useState("");
+  // const [getUser, setUser] = useState({});
+
+  const getUser = () => {
+    const userString = sessionStorage.getItem("user");
+    const user = JSON.parse(userString);
+    return user;
+  };
+
+  const setUser = (user) => {
+    sessionStorage.setItem("user", JSON.stringify(user));
+  };
 
   return (
-    <AuthContext.Provider value={{ userId, setUserId, token, setToken }}>
+    <AuthContext.Provider value={{ getUser, setUser }}>
       {children}
     </AuthContext.Provider>
   );
