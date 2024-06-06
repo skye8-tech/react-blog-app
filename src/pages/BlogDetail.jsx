@@ -103,6 +103,11 @@ function BlogDetail() {
     }
   };
 
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Post link copied to clipboard");
+  };
+
   useEffect(() => {
     fetchComments(postId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,7 +167,7 @@ function BlogDetail() {
               >
                 <i className="fa-regular fa-comment mr-2"></i>Comment
               </button>
-              <button>
+              <button onClick={handleShare}>
                 <i className="fa-solid fa-share mr-2"></i>Share
               </button>
             </div>
