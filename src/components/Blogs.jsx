@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import Load from "./Load";
 import { useBlogProvider } from "./BlogContext";
 
-function MainSection() {
-  const { posts, loading, error } = useBlogProvider();
+function Blogs() {
+  const [posts, setPosts] = useState([]);
+  const { loading, error, fetchPosts } = useBlogProvider();
+
+  useEffect(() => {
+    fetchPosts().then((result) => setPosts(result));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <section className="py-8 min-h-[80vh] bg-[url('/public/images/Background.jpg')] bg-contain bg-top bg-no-repeat">
@@ -16,7 +23,7 @@ function MainSection() {
               <h1>There was an error!!!</h1>
             </div>
           ) : posts.length !== 0 ? (
-            posts.map((post) => <Post key={post.id} {...post} />)
+            posts.map((post) => <Post key={post._id} {...post} />)
           ) : (
             <div className="text-center text-2xl font-semibold">
               <h1>There are no Posts!!!</h1>
@@ -33,4 +40,4 @@ function MainSection() {
   );
 }
 
-export default MainSection;
+export default Blogs;

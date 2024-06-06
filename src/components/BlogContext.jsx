@@ -1,40 +1,50 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 
 const BlogContext = React.createContext(null);
 
 export const BlogProvider = ({ children }) => {
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchPosts = () => {
-    axios
-      .get("https://api.jsonbin.io/v3/b/664dd5fce41b4d34e4f7ac44")
-      .then((res) => {
-        setPosts(res.data.record);
-        setLoading(false);
-        setError(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setError(true);
-      });
+  const fetchPosts = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const result = await axios.get(
+        "https://blog-api-zk5m.onrender.com/v1/posts"
+      );
+      setLoading(false);
+      setError(false);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(true);
+      return [];
+    }
   };
 
-  const fetchPostById = (postId) => {
-    // eslint-disable-next-line
-    const post = posts.find((item) => item.id == postId);
-    return post;
+  const fetchPostById = async (postId) => {
+    setLoading(true);
+    setError(false);
+    try {
+      const post = await axios.get(
+        `https://blog-api-zk5m.onrender.com/v1/posts/${postId}`
+      );
+      setLoading(false);
+      setError(false);
+      return post.data;
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(true);
+      return {};
+    }
   };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
 
   return (
-    <BlogContext.Provider value={{ posts, loading, error, fetchPostById }}>
+    <BlogContext.Provider value={{ loading, error, fetchPostById, fetchPosts }}>
       {children}
     </BlogContext.Provider>
   );
