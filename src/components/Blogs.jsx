@@ -14,7 +14,7 @@ function Blogs() {
 
   return (
     <>
-      <section className="py-8 min-h-[80vh] bg-[url('/public/images/Background.jpg')] bg-contain bg-top bg-no-repeat">
+      <section className="py-8 min-h-[80vh] bg-[url('/images/Background.jpg')] bg-contain bg-top bg-no-repeat">
         <div className="max-w-7xl mx-auto px-8 grid grid-cols-[repeat(auto-fit,minmax(343px,384px))] justify-center gap-8 pb-6">
           {loading ? (
             <Load />
