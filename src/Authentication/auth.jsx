@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     return user;
   };
 
-  const setUser = (user) => {
+  const setUser = (user = {}) => {
     sessionStorage.setItem("user", JSON.stringify(user));
   };
 

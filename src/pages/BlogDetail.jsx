@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Avatar from "../components/Avatar";
 import Footer from "../components/Footer";
 import Load from "../components/Load";
-import { useBlogProvider } from "../components/BlogContext";
 import useInput from "../hooks/useInput";
 import Comment from "../components/Comment";
 import axios from "axios";
 import { useAuth } from "../Authentication/auth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchSinglePost,
+  fetchWithoutRefresing,
+} from "../features/singlePost/singlePostSlice";
 
 function BlogDetail() {
   const { postId } = useParams();
-  const [post, setPost] = useState({});
   const [comment, bindComment, resetComment] = useInput("");
   const [PostComments, setPostComments] = useState([]);
   const commentRef = useRef(null);
-  const { loading, error, fetchPostById } = useBlogProvider();
+  const { loading, error, post } = useSelector((state) => state.singlePost);
+  const dispatch = useDispatch();
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,12 +39,15 @@ function BlogDetail() {
         })
         .then((result) => {
           fetchComments(postId);
+          alert("Added comment successfully");
+          resetComment();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          alert(error);
+        });
     } else {
       navigate("/login", { state: { path: location.pathname } });
     }
-    resetComment();
   };
 
   const isEmpty = (obj) => {
@@ -83,7 +90,8 @@ function BlogDetail() {
             }
           );
           console.log("Liked post " + postId);
-          fetchPostById(postId).then((result) => setPost(result));
+          dispatch(fetchWithoutRefresing(postId));
+          alert("Like post", postId);
         } else {
           await axios.delete(
             `https://blog-api-zk5m.onrender.com/v1/posts/like/${postId}`,
@@ -94,10 +102,12 @@ function BlogDetail() {
             }
           );
           console.log("Unliked post " + postId);
-          fetchPostById(postId).then((result) => setPost(result));
+          dispatch(fetchWithoutRefresing(postId));
+          alert("Unliked post", postId);
         }
       } catch (error) {
         console.log(error);
+        alert("Failed to like post try again");
       }
     } else {
       navigate("/login", { state: { path: location.pathname } });
@@ -109,21 +119,29 @@ function BlogDetail() {
     alert("Post link copied to clipboard");
   };
 
-  useEffect(() => {
-    fetchComments(postId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postId]);
+  const handleLogout = () => {
+    alert("You'll be logged out");
+    auth.setUser();
+  };
 
   useEffect(() => {
-    fetchPostById(postId).then((result) => setPost(result));
+    dispatch(fetchSinglePost(postId));
     fetchComments(postId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   return (
     <div>
-      <div className="h-12 shadow-md font-bold flex items-center pl-8 mb-8">
-        Post Detail
+      <div className="h-12 shadow-md font-bold flex items-center justify-between px-8 mb-8">
+        <Link to="/">Post Detail</Link>
+        {auth.getUser()?.token && (
+          <button
+            className=" border-2 border-black py-1 px-2 rounded-md"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
+        )}
       </div>
 
       <div className="max-w-5xl min-h-[50vh] mx-auto flex flex-col gap-y-4 px-4">
@@ -131,7 +149,7 @@ function BlogDetail() {
           <Load />
         ) : error ? (
           <div className="text-center text-2xl font-semibold">
-            <h1>There was an error!!!</h1>
+            <h1>{error}</h1>
           </div>
         ) : !isEmpty(post) ? (
           <>
