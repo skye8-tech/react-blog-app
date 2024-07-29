@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Post from "./Post";
 import Load from "./Load";
-import { useBlogProvider } from "./BlogContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../features/posts/postsSlice";
 
 function Blogs() {
-  const [posts, setPosts] = useState([]);
-  const { loading, error, fetchPosts } = useBlogProvider();
+  const { loading, posts, error } = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchPosts().then((result) => setPosts(result));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(fetchPosts());
   }, []);
 
   return (
@@ -20,7 +20,7 @@ function Blogs() {
             <Load />
           ) : error ? (
             <div className="text-center text-2xl font-semibold">
-              <h1>There was an error!!!</h1>
+              <h1>{error}</h1>
             </div>
           ) : posts.length !== 0 ? (
             posts.map((post) => <Post key={post._id} {...post} />)
